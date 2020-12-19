@@ -3,15 +3,23 @@ resource "azurerm_resource_group" "vm_rg" {
   location = local.merged_vm_settings.location
 }
 
+resource "azurerm_public_ip" "vm_ip" {
+  name                = "${local.merged_vm_settings.name}-public-ip"
+  resource_group_name = azurerm_resource_group.vm_rg.name
+  location            = azurerm_resource_group.vm_rg.location
+  allocation_method   = "Static"
+}
+
 resource "azurerm_network_interface" "vm_nic" {
   name                = "${local.merged_vm_settings.name}-nic"
   location            = azurerm_resource_group.vm_rg.location
   resource_group_name = azurerm_resource_group.vm_rg.name
 
   ip_configuration {
-    name                          = "internal"
+    name                          = "ipconfig1"
     subnet_id                     = local.merged_vm_settings.subnet_id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.vm_ip.id
   }
 }
 
