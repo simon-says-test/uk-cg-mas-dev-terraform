@@ -7,17 +7,28 @@ terraform {
   }
 }
 
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "Civica-UK-CG-MAS-dev"
+
+    workspaces {
+      name = "developer-environments"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
 }
 
 resource "azurerm_resource_group" "example" {
-  name     = "test-rg-ST"
+  name     = "DEV-ST-RG"
   location = "uksouth"
 }
 
 resource "azurerm_resource_group" "example2" {
-  name     = "test-rg-WJ"
+  name     = "DEV-WJ-RG"
   location = "uksouth"
 }
 
