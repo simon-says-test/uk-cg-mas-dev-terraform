@@ -80,6 +80,7 @@ module "azure_windows_vm_1" {
 
   vm_settings = {
     name = local.vm_params[count.index]["name"]
+    computer_name = local.vm_params[count.index]["computer_name"]
     resource_group_name = local.vm_params[count.index]["resource_group_name"]
     subnet_id = tolist(azurerm_virtual_network.primary.subnet)[0].id
   }

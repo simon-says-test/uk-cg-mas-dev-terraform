@@ -78,6 +78,7 @@ resource "azurerm_network_interface" "vm_nic" {
 # }
 
 resource "azurerm_windows_virtual_machine" "vm" {
+    computer_name           = local.merged_vm_settings.computer_name
     name                    = local.merged_vm_settings.name
     resource_group_name     = local.merged_vm_settings.resource_group_name
     location                = local.merged_vm_settings.location
