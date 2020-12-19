@@ -51,21 +51,23 @@ resource "azurerm_virtual_network" "primary" {
   resource_group_name = azurerm_resource_group.vnet.name
 
   subnet {
-    name           = "DEV-AZ-Sub01"
-    address_prefix = "192.168.16.0/24"
-    security_group = azurerm_network_security_group.primary.id
+    name                = "DEV-AZ-Sub01"
+    address_prefix      = "192.168.16.0/24"
+    security_group      = azurerm_network_security_group.primary.id
   }
 }
 
 module "azure_windows_vm_1" {
-  count = length(local.vm_params)
-  source = "./azure_windows_vm"
+  count                   = length(local.vm_params)
+  source                  = "./azure_windows_vm"
 
   vm_settings = {
-    name = local.vm_params[count.index]["name"]
-    computer_name = local.vm_params[count.index]["computer_name"]
-    resource_group_name = local.vm_params[count.index]["resource_group_name"]
-    subnet_id = tolist(azurerm_virtual_network.primary.subnet)[0].id
+    name                    = local.vm_params[count.index]["name"]
+    computer_name           = local.vm_params[count.index]["computer_name"]
+    resource_group_name     = local.vm_params[count.index]["resource_group_name"]
+    subnet_id               = tolist(azurerm_virtual_network.primary.subnet)[0].id
+    admin_username          = var.admin_username
+    admin_password          = var.admin_password
   }
 }
 

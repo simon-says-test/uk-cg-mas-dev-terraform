@@ -2,8 +2,6 @@ variable "vm_defaults" {
   type = object({
     location                    = string
     size                        = string
-    admin_username              = string
-    admin_password              = string
     os_disk                     = object({
       caching                     = string
       storage_account_type        = string
@@ -20,8 +18,6 @@ variable "vm_defaults" {
   default = {
     location                = "uksouth"
     size                    = "Standard_D4s_v4"
-    admin_username          = "admint"
-    admin_password          = "testpassword"
     os_disk                 = {
       caching                 = "ReadWrite"
       storage_account_type    = "StandardSSD_LRS"

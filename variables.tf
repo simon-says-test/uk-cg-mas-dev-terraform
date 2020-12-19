@@ -1,17 +1,17 @@
-# variable "resource_group_name" {
-#   description = "Default resource group name that the developer environment will be created in."
-#   type        = list
-#   default     = ["DEV-ST-RG"]
-# }
+variable "admin_username" {
+  description   = "The username for the VM admin account"
+  type          = string
+  default       = null
+}
 
-# variable "vm_name" {
-#   description = "Default name of the virtual machine."
-#   type        = list
-#   default     = ["vm-civica-dms-simon-thomas"]
-# }
+variable "admin_password" {
+  description   = "The password for the VM admin account"
+  type          = string
+  default       = null
+}
 
 variable "vm_params" {
-    type = map(any)
-    description = "Groups of VM parameters"
-    default = null
+  type          = map(any)
+  description   = "Groups of VM parameters"
+  default       = null
 }
