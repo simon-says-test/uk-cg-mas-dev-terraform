@@ -7,7 +7,7 @@ locals {
         },
         { 
           computer_name = "warren"
-          name = "vm-civica-cg-dev-warren"  
+          name = "vm-civica-ukcg-dev-warren"  
           resource_group_name = "rg-civica-ukcg-dev-warren"
         }
     ]
