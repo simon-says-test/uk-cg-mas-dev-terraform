@@ -9,3 +9,9 @@
 #   type        = list
 #   default     = ["vm-civica-dms-simon-thomas"]
 # }
+
+variable "vm_params" {
+    type = map(any)
+    description = "Groups of VM parameters"
+    default = null
+}

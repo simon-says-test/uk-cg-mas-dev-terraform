@@ -1,7 +1,7 @@
-variable "name" {
-  type = string
-  description = "The name of the virtual machine"
-}
+# variable "name" {
+#   type = string
+#   description = "The name of the virtual machine"
+# }
 
 variable "vm_defaults" {
   type = object({
