@@ -70,8 +70,8 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm_data_disk_attachment
 resource "azurerm_virtual_machine_extension" "vm_extension" {
   name                 = "hostname"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
+  publisher            = "Microsoft.Compute"
+  type                 = "CustomScriptExtension"
   type_handler_version = "2.0"
   settings = <<SETTINGS
   {
@@ -80,7 +80,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "powershell.exe -Command \"./${var.script}; exit 0;\""
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File \"./${var.script}; exit 0;\""
     }
   PROTECTED_SETTINGS
 }
