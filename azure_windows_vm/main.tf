@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File \"${var.script_file}\"; exit 0;"
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ${var.script_file}; exit 0;"
     }
   PROTECTED_SETTINGS
 }
