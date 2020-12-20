@@ -4,7 +4,7 @@ resource "azurerm_resource_group" "storage" {
 }
 
 resource "azurerm_storage_account" "primary" {
-  name                     = "stadmindata001"
+  name                     = "stukcgdevadmindata001"
   resource_group_name      = azurerm_resource_group.storage.name
   location                 = azurerm_resource_group.storage.location
   account_tier             = "Standard"
