@@ -72,7 +72,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
-  type_handler_version = "2.0"
+  type_handler_version = "1.10"
   settings = <<SETTINGS
   {
     "fileUris": ["${var.script}"]
