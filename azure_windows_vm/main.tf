@@ -1,4 +1,8 @@
-variable "script" {
+variable "script_url" {
+  type    = string
+}
+
+variable "script_file" {
   type    = string
 }
 
@@ -67,20 +71,21 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm_data_disk_attachment
   caching            = "ReadWrite"
 }
 
+# If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "hostname"
+  name                 = "setup"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.10"
   settings = <<SETTINGS
   {
-    "fileUris": ["${var.script}"]
+    "fileUris": ["${var.script_url}"]
   }
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ${var.script}; exit 0;\""
+      "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File ${var.script_file}; exit 0;\""
     }
   PROTECTED_SETTINGS
 }
