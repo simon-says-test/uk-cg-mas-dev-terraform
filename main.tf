@@ -30,7 +30,7 @@ module "azure_windows_vm_1" {
     name                    = local.vm_params[count.index]["name"]
     computer_name           = local.vm_params[count.index]["computer_name"]
     resource_group_name     = local.vm_params[count.index]["resource_group_name"]
-    subnet_id               = tolist(azurerm_virtual_network.primary.subnet)[0].id
+    subnet_id               = tolist(azurerm_virtual_network.primary.subnet)[0].id # TODO: This is dodgy since order not guaranteed
     admin_username          = var.admin_username
     admin_password          = var.admin_password
   }
