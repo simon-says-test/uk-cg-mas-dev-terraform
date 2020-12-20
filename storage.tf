@@ -22,5 +22,5 @@ resource "azurerm_storage_blob" "primary" {
   storage_account_name   = azurerm_storage_account.primary.name
   storage_container_name = azurerm_storage_container.primary.name
   type                   = "Block"
-  source                 = "matrix_code.ico"
+  source                 = "resources/matrix_code.ico"
 }
