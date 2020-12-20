@@ -1,1 +1,2 @@
-Write-Output "Success!"
+Write-Output "Success!";
+exit 0;
