@@ -1,3 +1,7 @@
+variable "script" {
+  type    = string
+}
+
 resource "azurerm_resource_group" "vm_rg" {
   name     = local.merged_vm_settings.resource_group_name
   location = local.merged_vm_settings.location
@@ -61,4 +65,22 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm_data_disk_attachment
   virtual_machine_id = azurerm_windows_virtual_machine.vm.id
   lun                = "10"
   caching            = "ReadWrite"
+}
+
+resource "azurerm_virtual_machine_extension" "vm_extension" {
+  name                 = "hostname"
+  virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+  settings = <<SETTINGS
+  {
+    "fileUris": ["${var.script}"]
+  }
+  SETTINGS
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+      "commandToExecute": "powershell.exe -Command \"./${var.script}; exit 0;\""
+    }
+  PROTECTED_SETTINGS
 }
