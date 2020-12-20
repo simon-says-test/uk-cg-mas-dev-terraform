@@ -25,11 +25,17 @@ resource "azurerm_virtual_network" "primary" {
   address_space       = ["192.168.16.0/23"]
   location            = azurerm_resource_group.vnet.location
   resource_group_name = azurerm_resource_group.vnet.name
+}
 
-  subnet {
-    name                = "DEV-AZ-Sub01"
-    address_prefix      = "192.168.16.0/24"
-    security_group      = azurerm_network_security_group.primary.id
-    service_endpoints    = ["Microsoft.Storage"]
-  }
+resource "azurerm_subnet" "primary" {
+  name                 = "DEV-AZ-Sub01"
+  resource_group_name  = azurerm_resource_group.vnet.name
+  virtual_network_name = azurerm_virtual_network.primary.name
+  address_prefixes     = ["192.168.16.0/24"]
+  service_endpoints    = ["Microsoft.Storage"]
+}
+
+resource "azurerm_subnet_network_security_group_association" "primary" {
+  subnet_id                 = azurerm_subnet.primary.id
+  network_security_group_id = azurerm_network_security_group.primary.id
 }
