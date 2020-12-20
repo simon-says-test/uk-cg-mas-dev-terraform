@@ -30,5 +30,6 @@ resource "azurerm_virtual_network" "primary" {
     name                = "DEV-AZ-Sub01"
     address_prefix      = "192.168.16.0/24"
     security_group      = azurerm_network_security_group.primary.id
+    service_endpoints    = ["Microsoft.Storage"]
   }
 }
