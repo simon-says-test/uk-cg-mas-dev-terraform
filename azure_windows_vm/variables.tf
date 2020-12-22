@@ -36,6 +36,18 @@ variable "vm_settings" {
   description = "Map of vm settings to be applied which will be merged with the vm_defaults. Allowed keys are the same as for vm_defaults."
 }
 
+variable "respository_url" {
+  description = "The URL of the repository containing the setup scripts to run on VM creation."
+  type = string
+  default = "https://github.com/CivicaDigital/uk-cg-mas-dev-terraform.git"
+}
+
+variable "script_directory" {
+  description = "The directory path of the setup scripts to run on VM creation."
+  type = string
+  default = "E:\Source\uk-cg-mas-dev-terraform\resources"
+}
+
 locals {
   merged_vm_settings = merge(var.vm_defaults, var.vm_settings)
 }
