@@ -27,7 +27,7 @@ module "azure_windows_vm_1" {
   source                  = "./azure_windows_vm"
   script_url              = azurerm_storage_blob.setup.url
   script_file             = azurerm_storage_blob.setup.name
-
+  repo_dir                = "uk-cg-mas-dev-terraform"
 
   vm_settings = {
     name                    = local.vm_params[count.index]["name"]
