@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "git clone ${var.repository_url} E:\Source;cd ${var.script_directory}; powershell.exe -ExecutionPolicy Unrestricted -File ./${var.script_file}"
+      "commandToExecute": "git clone ${var.repository_url} E:/Source;cd ${var.script_directory}; powershell.exe -ExecutionPolicy Unrestricted -File ./${var.script_file}"
     }
   PROTECTED_SETTINGS
 }

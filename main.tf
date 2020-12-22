@@ -25,8 +25,8 @@ provider "azurerm" {
 module "azure_windows_vm_1" {
   count                   = length(local.vm_params)
   source                  = "./azure_windows_vm"
-  script_url              = azurerm_storage_blob.test_script.url
-  script_file             = azurerm_storage_blob.test_script.name
+  script_url              = azurerm_storage_blob.setup.url
+  script_file             = azurerm_storage_blob.setup.name
 
 
   vm_settings = {
