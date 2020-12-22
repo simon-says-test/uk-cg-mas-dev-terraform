@@ -103,7 +103,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir}; powershell.exe -ExecutionPolicy Unrestricted -File ./${var.script_file}"
+      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.script_file}"
     }
   PROTECTED_SETTINGS
 }
