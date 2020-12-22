@@ -38,7 +38,6 @@ resource "azurerm_storage_account" "private" {
 resource "azurerm_storage_account_network_rules" "private" {
   resource_group_name  = azurerm_resource_group.storage.name
   storage_account_name = azurerm_storage_account.private.name
-  default_action             = "Allow"
   default_action             = "Deny"
   ip_rules                   = ["127.0.0.1","212.28.31.6","213.143.143.69","213.143.143.68","213.143.146.159"]
   virtual_network_subnet_ids = [tolist(azurerm_virtual_network.primary.subnet)[0].id] # TODO: This is dodgy since order not guaranteed
