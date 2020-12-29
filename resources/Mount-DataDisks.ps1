@@ -9,7 +9,6 @@ foreach ($disk in $disks) {
     $disk | 
         Initialize-Disk -PartitionStyle MBR -PassThru |
         New-Partition -UseMaximumSize -DriveLetter $driveLetter |
-        Format-Volume -FileSystem NTFS -NewFileSystemLabel "Data${count}" -Force
-        Write-Host "Disk mounted as ${driveLetter}:"
-
+        Format-Volume -FileSystem NTFS -NewFileSystemLabel "Data${count}" -Confirm:$false
+    Write-Host "Disk mounted as ${driveLetter}:"
 }

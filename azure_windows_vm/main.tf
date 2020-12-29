@@ -67,7 +67,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 resource "azurerm_managed_disk" "vm_data_disk" {
-  name                 = "${local.merged_vm_settings.name}-data-disk-1"
+  name                 = "${local.merged_vm_settings.name}-data-disk"
   location             = azurerm_resource_group.vm_rg.location
   resource_group_name  = azurerm_resource_group.vm_rg.name
   storage_account_type = "StandardSSD_LRS"
