@@ -1,8 +1,16 @@
-variable "script_url" {
+variable "initialize_vm_url" {
   type    = string
 }
 
-variable "script_file" {
+variable "initialize_vm_file" {
+  type    = string
+}
+
+variable "mount_disks_url" {
+  type    = string
+}
+
+variable "mount_disks_file" {
   type    = string
 }
 
@@ -59,7 +67,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 resource "azurerm_managed_disk" "vm_data_disk" {
-  name                 = "${local.merged_vm_settings.name}-data-disk"
+  name                 = "${local.merged_vm_settings.name}-data-disk-1"
   location             = azurerm_resource_group.vm_rg.location
   resource_group_name  = azurerm_resource_group.vm_rg.name
   storage_account_type = "StandardSSD_LRS"
@@ -98,12 +106,12 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   type_handler_version = "1.10"
   settings = <<SETTINGS
   {
-    "fileUris": ["${var.script_url}"]
+    "fileUris": ["${var.initialize_vm_url}", "${var.mount_disks_url}"]
   }
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.script_file}"
+      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
     }
   PROTECTED_SETTINGS
 }

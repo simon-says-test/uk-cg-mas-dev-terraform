@@ -1,8 +1,11 @@
-$scriptpath = $MyInvocation.MyCommand.Path
 $dir = Split-Path $MyInvocation.MyCommand.Path
 Write-Host "Current directory is $dir"
 
-. "./Initialise-Disk.ps1"
+. "./Mount-DataDisks.ps1"
+$source = "D:\Source"
+git clone ${var.repository_url} $source
+
+exit 0
 
 . "./Set-FolderIcon.ps1"
 New-Item -Path "E:\" -Name "Source" -ItemType "directory"
@@ -10,8 +13,7 @@ New-Item -Path "E:\" -Name "Source" -ItemType "directory"
 # Install Chocolatey package manager - may need to restart PowerShell window before proceeding
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install git -y
-$source = "E:\Source"
-git clone ${var.repository_url} $source
+
 Set-Location ${var.script_directory}; 
 New-Item -Path $source -Name "desktop.ini" -ItemType "file"
 Set-FolderIcon -Icon "${dir}\matrix_code.ico" -Path $source

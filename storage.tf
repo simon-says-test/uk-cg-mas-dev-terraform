@@ -18,12 +18,20 @@ resource "azurerm_storage_container" "public" {
   container_access_type = "blob"
 }
 
-resource "azurerm_storage_blob" "setup" {
-  name                   = "script.ps1"
+resource "azurerm_storage_blob" "initialize_vm" {
+  name                   = "Initialize-VirtualMachine.ps1"
   storage_account_name   = azurerm_storage_account.public.name
   storage_container_name = azurerm_storage_container.public.name
   type                   = "Block"
-  source                 = "resources/script.ps1"
+  source                 = "resources/Initialize-VirtualMachine.ps1"
+}
+
+resource "azurerm_storage_blob" "mount_datadisks" {
+  name                   = "Mount-DataDisks.ps1"
+  storage_account_name   = azurerm_storage_account.public.name
+  storage_container_name = azurerm_storage_container.public.name
+  type                   = "Block"
+  source                 = "resources/Mount-DataDisks.ps1"
 }
 
 # resource "azurerm_storage_account" "private" {

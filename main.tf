@@ -25,8 +25,10 @@ provider "azurerm" {
 module "azure_windows_vm_1" {
   count                   = length(local.vm_params)
   source                  = "./azure_windows_vm"
-  script_url              = azurerm_storage_blob.setup.url
-  script_file             = azurerm_storage_blob.setup.name
+  initialize_vm_url       = azurerm_storage_blob.initialize_vm.url
+  initialize_vm_file      = azurerm_storage_blob.initialize_vm.name
+  mount_disks_url         = azurerm_storage_blob.mount_datadisks.url
+  mount_disks_file        = azurerm_storage_blob.mount_datadisks.name
   repo_dir                = "uk-cg-mas-dev-terraform"
 
   vm_settings = {
