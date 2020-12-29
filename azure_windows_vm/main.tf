@@ -99,7 +99,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "example" {
 
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "initializer"
+  name                 = "initialize"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
