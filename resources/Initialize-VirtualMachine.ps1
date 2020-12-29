@@ -9,12 +9,9 @@ Set-WinUserLanguageList -LanguageList en-GB -Force
 $source = "F:\Source"
 
 # Install Chocolatey package manager - may need to restart PowerShell window before proceeding
-#Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-Write-Host "About to install git"
-choco install git -y
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+C:\ProgramData\chocolatey\bin\choco.exe install git -y
 git --version
-
-
 
 git clone ${var.repository_url} $source
 

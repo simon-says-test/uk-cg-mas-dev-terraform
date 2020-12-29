@@ -99,7 +99,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "example" {
 
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "initialize"
+  name                 = "initializer"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -Command \"Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))\" && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
+      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
     }
   PROTECTED_SETTINGS
 }
