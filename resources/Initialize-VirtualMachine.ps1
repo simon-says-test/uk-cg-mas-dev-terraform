@@ -8,9 +8,14 @@ Set-WinUserLanguageList -LanguageList en-GB -Force
 . "./Mount-DataDisks.ps1"
 $source = "F:\Source"
 
-# Install Chocolatey package manager - may need to restart PowerShell window before proceeding
+# Install Chocolatey package manager
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-C:\ProgramData\chocolatey\bin\choco.exe install git -y
+
+# Since we can't restart terminal as such, the amendment to the path variable is not respected - hardcode path to exe
+$choco = "C:\ProgramData\chocolatey\bin\choco.exe"
+& $choco
+& $choco install git -y
+Write-Output "Installed git?"
 git --version
 
 git clone ${var.repository_url} $source
