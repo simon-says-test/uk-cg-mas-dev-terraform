@@ -1,12 +1,20 @@
 $dir = Split-Path $MyInvocation.MyCommand.Path
 Write-Host "Current directory is $dir"
 
-# Install Chocolatey package manager - may need to restart PowerShell window before proceeding
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-choco install git -y
+# Change language and keyboard layout
+Set-WinUserLanguageList -LanguageList en-GB -Force
 
+# Mount data disks
 . "./Mount-DataDisks.ps1"
 $source = "F:\Source"
+
+# Install Chocolatey package manager - may need to restart PowerShell window before proceeding
+#Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+Write-Host "About to install git"
+choco install git -y
+git --version
+
+
 
 git clone ${var.repository_url} $source
 

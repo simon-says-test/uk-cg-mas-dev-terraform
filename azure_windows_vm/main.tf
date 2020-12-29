@@ -111,7 +111,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
+      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -Command \"Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))\" && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
     }
   PROTECTED_SETTINGS
 }
