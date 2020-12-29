@@ -67,7 +67,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 resource "azurerm_managed_disk" "vm_data_disk" {
-  name                 = "${local.merged_vm_settings.name}-data-disk-1"
+  name                 = "${local.merged_vm_settings.name}-data-disk"
   location             = azurerm_resource_group.vm_rg.location
   resource_group_name  = azurerm_resource_group.vm_rg.name
   storage_account_type = "StandardSSD_LRS"
@@ -99,7 +99,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "example" {
 
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "setup"
+  name                 = "initialize"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
