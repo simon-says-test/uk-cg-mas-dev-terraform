@@ -6,7 +6,6 @@ Set-WinUserLanguageList -LanguageList en-GB -Force
 
 # Mount data disks
 . "./Mount-DataDisks.ps1"
-$source = "F:\Source"
 
 # Install Chocolatey package manager
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
@@ -18,14 +17,14 @@ $choco = "C:\ProgramData\chocolatey\bin\choco.exe"
 Write-Output "Installed git?"
 git --version
 
+# Clone script repo to get remaining scripts and other resources
+$source = "F:\Source"
 git clone ${var.repository_url} $source
 
 exit 0
 
 . "./Set-FolderIcon.ps1"
 New-Item -Path "F:\" -Name "Source" -ItemType "directory"
-
-
 
 Set-Location ${var.script_directory}; 
 New-Item -Path $source -Name "desktop.ini" -ItemType "file"
