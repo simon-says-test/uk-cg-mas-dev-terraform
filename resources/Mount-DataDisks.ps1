@@ -1,4 +1,5 @@
-# If updates to this script aren't been reflected when it runs, update the resource names (in storage.tf) to force recreation
+# If updates to this script aren't been reflected when it runs, force resource recreation using:
+# terraform taint azurerm_storage_blob.mount_datadisks
 
 $disks = Get-Disk | Where-Object partitionstyle -eq 'raw' | Sort-Object number
 

@@ -1,4 +1,5 @@
-# If updates to this script aren't been reflected when it runs, update the resource names (in storage.tf) to force recreation
+# If updates to this script aren't been reflected when it runs, force resource recreation using:
+# terraform taint azurerm_storage_blob.initialize_vm
 
 $dir = Split-Path $MyInvocation.MyCommand.Path
 Write-Host "Current directory is $dir"
@@ -20,8 +21,8 @@ Write-Output "Installed git?"
 git --version
 
 # Clone script repo to get remaining scripts and other resources
-New-Item -Path "F:\" -Name "Source" -ItemType "directory"
-$source = "F:\Source"
+New-Item -Path "E:\" -Name "Source" -ItemType "directory"
+$source = "E:\Source"
 Set-Location $source
 git clone $Env:REPO_URL "vm-setup"
 Set-Location "vm-setup"
