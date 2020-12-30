@@ -101,7 +101,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
 # If the scripts referenced in fileUris have changed, force resource recreation using e.g.
 # terraform taint azurerm_storage_blob.mount_datadisks
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "initializer"
+  name                 = "initialize"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
