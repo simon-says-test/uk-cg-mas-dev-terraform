@@ -15,20 +15,19 @@ Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://cho
 # Since we can't restart terminal as such, the amendment to the path variable is not respected - hardcode path to exe
 $choco = "C:\ProgramData\chocolatey\bin\choco.exe"
 & $choco
-& $choco install git -y
+& $choco install git -y --no-progress
 Write-Output "Installed git?"
 git --version
 
 # Clone script repo to get remaining scripts and other resources
+New-Item -Path "F:\" -Name "Source" -ItemType "directory"
 $source = "F:\Source"
-git clone ${var.repository_url} $source
-
-exit 0
+Set-Location $source
+git clone $Env:REPO_URL "vm-setup"
+Set-Location "vm-setup"
+Set-Location $Env:SCRIPT_DIR
 
 . "./Set-FolderIcon.ps1"
-New-Item -Path "F:\" -Name "Source" -ItemType "directory"
-
-Set-Location ${var.script_directory}; 
 New-Item -Path $source -Name "desktop.ini" -ItemType "file"
 Set-FolderIcon -Icon "${dir}\matrix_code.ico" -Path $source
 

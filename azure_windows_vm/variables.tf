@@ -45,7 +45,7 @@ variable "repository_url" {
 variable "script_directory" {
   description = "The directory path of the setup scripts to run on VM creation."
   type = string
-  default = "E:/Source/uk-cg-mas-dev-terraform/resources"
+  default = "resources"
 }
 
 locals {

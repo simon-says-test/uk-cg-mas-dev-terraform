@@ -83,7 +83,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm_data_disk_attachment
   caching            = "ReadWrite"
 }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "example" {
+resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
   virtual_machine_id = azurerm_windows_virtual_machine.vm.id
   location           = azurerm_resource_group.vm_rg.location
   enabled            = true
@@ -112,7 +112,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
+      "commandToExecute": "setx REPO_URL ${var.repository_url} && setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
     }
   PROTECTED_SETTINGS
 }
