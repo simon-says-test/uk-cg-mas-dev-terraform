@@ -102,6 +102,9 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
   type_handler_version = "1.10"
+  depends_on = [
+    azurerm_virtual_machine_data_disk_attachment.vm_data_disk_attachment,
+  ]
   settings = <<SETTINGS
   {
     "fileUris": ["${var.initialize_vm_url}", "${var.mount_disks_url}"]
