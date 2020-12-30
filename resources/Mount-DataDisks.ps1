@@ -1,3 +1,5 @@
+# If updates to this script aren't been reflected when it runs, update the resource names (in storage.tf) to force recreation
+
 $disks = Get-Disk | Where-Object partitionstyle -eq 'raw' | Sort-Object number
 
 $letters = 70..89 | ForEach-Object { [char]$_ }

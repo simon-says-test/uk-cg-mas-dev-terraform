@@ -1,3 +1,5 @@
+# If updates to this script aren't been reflected when it runs, update the resource names (in storage.tf) to force recreation
+
 $dir = Split-Path $MyInvocation.MyCommand.Path
 Write-Host "Current directory is $dir"
 
