@@ -30,7 +30,7 @@ Set-Location $Env:SCRIPT_DIR
 
 . "./Set-FolderIcon.ps1"
 New-Item -Path $source -Name "desktop.ini" -ItemType "file"
-Set-FolderIcon -Icon "matrix_code.ico" -Path $source
+Set-FolderIcon -Icon "${Env:REPO_URL}\vm-setup\${Env:SCRIPT_DIR}\matrix_code.ico" -Path $source
 
 # Add Source to quick access:
 $qa = New-Object -ComObject shell.application
