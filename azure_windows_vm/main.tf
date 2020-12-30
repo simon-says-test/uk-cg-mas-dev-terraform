@@ -100,7 +100,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "example" {
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
 # If the scripts referenced in fileUris have changed, update their resource names (in storage.tf) to force recreation 
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "initialize"
+  name                 = "initializer"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
