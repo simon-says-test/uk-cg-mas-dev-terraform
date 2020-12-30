@@ -14,10 +14,6 @@ variable "mount_disks_file" {
   type    = string
 }
 
-variable "repo_dir" {
-  type    = string
-}
-
 resource "azurerm_resource_group" "vm_rg" {
   name     = local.merged_vm_settings.resource_group_name
   location = local.merged_vm_settings.location
@@ -101,7 +97,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
 # If the scripts referenced in fileUris have changed, force resource recreation using e.g.
 # terraform taint azurerm_storage_blob.mount_datadisks
 resource "azurerm_virtual_machine_extension" "vm_extension" {
-  name                 = "initialize"
+  name                 = "initializer"
   virtual_machine_id   = azurerm_windows_virtual_machine.vm.id
   publisher            = "Microsoft.Compute"
   type                 = "CustomScriptExtension"
@@ -113,7 +109,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
     {
-      "commandToExecute": "setx REPO_URL ${var.repository_url} && setx SCRIPT_DIR ${var.repo_dir} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
+      "commandToExecute": "setx REPO_URL ${var.repository_url} && setx SCRIPT_DIR ${var.script_directory} && powershell.exe -ExecutionPolicy Unrestricted -File ./${var.initialize_vm_file}"
     }
   PROTECTED_SETTINGS
 }
