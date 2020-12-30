@@ -20,7 +20,7 @@ resource "azurerm_storage_container" "public" {
 
 # Update the name if the script has updated to force resource recreation
 resource "azurerm_storage_blob" "initialize_vm" {
-  name                   = "Initialize-VirtualMachine1.ps1"
+  name                   = "Initialize-VirtualMachine.ps1"
   storage_account_name   = azurerm_storage_account.public.name
   storage_container_name = azurerm_storage_container.public.name
   type                   = "Block"
@@ -29,7 +29,7 @@ resource "azurerm_storage_blob" "initialize_vm" {
 
 # Update the name if the script has updated to force resource recreation
 resource "azurerm_storage_blob" "mount_datadisks" {
-  name                   = "Mount-DataDisks1.ps1"
+  name                   = "Mount-DataDisks.ps1"
   storage_account_name   = azurerm_storage_account.public.name
   storage_container_name = azurerm_storage_container.public.name
   type                   = "Block"
