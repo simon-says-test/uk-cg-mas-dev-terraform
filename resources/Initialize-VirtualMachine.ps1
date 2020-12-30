@@ -37,12 +37,5 @@ Write-Output "PROGRESS: Setting folder icon"
 New-Item -Path $source -Name "desktop.ini" -ItemType "file"
 Set-FolderIcon -Icon "${source}\vm-setup\${Env:SCRIPT_DIR}\matrix_code.ico" -Path $source
 
-Write-Output "PROGRESS: Adding Source to quick access"
-$qa = New-Object -ComObject shell.application
-$qa.NameSpace($source).Self.InvokeVerb("pintohome")
-
-Write-Output "PROGRESS: Removing Videos from quick access"
-($qa.Namespace("shell:::{679F85CB-0220-4080-B29B-5540CC05AAB6}").Items() | Where-Object { $_.Path -EQ "C:${env:HOMEPATH}\Videos" }).InvokeVerb("unpinfromhome")
-
 Write-Output "This is what success looks like!"
 exit 0
