@@ -29,4 +29,4 @@ Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI
 
 Write-Output "PROGRESS: About to restart to complete setup"
 Start-Sleep -Seconds 5
-Restart-Computer
+Restart-Computer -Force

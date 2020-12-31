@@ -23,4 +23,4 @@ Register-ScheduledTask SetupVM -InputObject $task
 
 Write-Output "PROGRESS: About to restart to complete setup"
 Start-Sleep -Seconds 5
-Restart-Computer
+Restart-Computer -Force
