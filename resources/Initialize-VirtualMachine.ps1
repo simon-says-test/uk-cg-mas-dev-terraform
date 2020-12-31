@@ -13,29 +13,20 @@ Write-Output "Mount data disks"
 Write-Output  "Install Chocolatey package manager"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Since we can't restart terminal as such, the amendment to the path variable is not respected - hardcode path to exe
-$choco = "C:\ProgramData\chocolatey\bin\choco.exe"
-
-Write-Output "PROGRESS: Test choco"
-& choco
-
 Write-Output "PROGRESS: Install git"
-& $choco install git -y --no-progress
+& choco install git -y --no-progress
 
 Write-Output "PROGRESS: Creating Source directory"
 New-Item -Path "E:\" -Name "Source" -ItemType "directory"
-$source = "E:\Source"
-Set-Location $source
+$repo = "E:/Source/vm-setup"
 
-Write-Output "PROGRESS: Cloning repo get remaining scripts and other resources"
-git clone $Env:REPO_URL "vm-setup"
-Set-Location "vm-setup"
-Set-Location $Env:SCRIPT_DIR
-
-Write-Output "PROGRESS: Setting folder icon"
-. "./Set-FolderIcon.ps1"
-New-Item -Path $source -Name "desktop.ini" -ItemType "file"
-Set-FolderIcon -Icon "${source}\vm-setup\${Env:SCRIPT_DIR}\matrix_code.ico" -Path $source
+Write-Output "PROGRESS: Creating scheduled task to clone repo, get remaining scripts and continue setup upon login"
+$argument = "-Command &{git clone $Env:REPO_URL $repo; ./${repo}/${Env:SCRIPT_DIR}Initialize-VirtualMachine2.ps1}'"
+$action = New-ScheduledTaskAction -Execute "powershell" -Argument $argument
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+$principal = New-ScheduledTaskPrincipal -GroupId "BUILTIN\Administrators" -RunLevel Highest
+$task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal
+Register-ScheduledTask SetupVM -InputObject $task
 
 Write-Output "This is what success looks like!"
 exit 0
