@@ -28,16 +28,6 @@ resource "azurerm_storage_blob" "initialize_vm" {
   source                 = "resources/Initialize-VirtualMachine.ps1"
 }
 
-# If the Initialize-VirtualMachine2.ps1 script has been updated, force resource recreation using:
-# terraform taint azurerm_storage_blob.initialize_vm
-resource "azurerm_storage_blob" "initialize_vm2" {
-  name                   = "Initialize-VirtualMachine2.ps1"
-  storage_account_name   = azurerm_storage_account.public.name
-  storage_container_name = azurerm_storage_container.public.name
-  type                   = "Block"
-  source                 = "resources/Initialize-VirtualMachine2.ps1"
-}
-
 # If the Mount-DataDisks.ps1 script has been updated, force resource recreation using:
 # terraform taint azurerm_storage_blob.mount_datadisks
 resource "azurerm_storage_blob" "mount_datadisks" {
