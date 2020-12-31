@@ -14,7 +14,7 @@ dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /nores
 Unregister-ScheduledTask -TaskName SetupVM -Confirm:$false
 
 Write-Output "PROGRESS: Creating scheduled task to continue setup"
-$argument = "-ExecutionPolicy Unrestricted -NoExit -Command & ${dir}/Initialize-VirtualMachine3.ps1}'"
+$argument = "-ExecutionPolicy Unrestricted -NoExit -Command & {${dir}\Initialize-VirtualMachine3.ps1}'"
 $action = New-ScheduledTaskAction -Execute "powershell" -Argument $argument
 $trigger = New-ScheduledTaskTrigger -AtLogOn
 $principal = New-ScheduledTaskPrincipal -GroupId "BUILTIN\Administrators" -RunLevel Highest
