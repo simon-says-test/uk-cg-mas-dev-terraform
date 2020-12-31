@@ -7,18 +7,18 @@ Write-Host "Current directory is $dir"
 Write-Output "Changing language and keyboard layout" 
 Set-WinUserLanguageList -LanguageList en-GB -Force
 
-Write-Output "Mount data disks"
+Write-Output "Mounting data disks"
 . "./Mount-DataDisks.ps1"
 
-Write-Output  "Install Chocolatey package manager"
+Write-Output  "Installing Chocolatey package manager"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-Write-Output "PROGRESS: Install git"
+Write-Output "PROGRESS: Installing git"
 & choco install git -y --no-progress
 
-Write-Output "PROGRESS: Creating Source directory"
-New-Item -Path "E:\" -Name "Source" -ItemType "directory"
-$repo = "E:/Source/vm-setup"
+Write-Output "PROGRESS: Creating temp directory"
+New-Item -Path "C:\WindowsAzure" -Name "Temp" -ItemType "directory"
+$repo = "C:/WindowsAzure/Temp/vm-setup"
 
 Write-Output "PROGRESS: Creating scheduled task to clone repo, get remaining scripts and continue setup upon login"
 $argument = "-ExecutionPolicy Unrestricted -NoExit -Command & {git clone $Env:REPO_URL $repo; git pull; & ${repo}/${Env:SCRIPT_DIR}/Initialize-VirtualMachine2.ps1}"
