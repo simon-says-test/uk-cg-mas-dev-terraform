@@ -2,14 +2,16 @@ $dir = Split-Path $MyInvocation.MyCommand.Path
 Write-Host "Script directory is $dir"
 Set-Location $dir
 
+# Slightly dodgy way of getting drive letter as sometimes is E, sometimes F
+$drive = Get-PSDrive -PSProvider FileSystem | Select-Object -Last 1 | Select-Object -ExpandProperty "Name"
 Write-Output "PROGRESS: Creating Source directory"
-New-Item -Path "E:\" -Name "Source" -ItemType "directory"
+New-Item -Path "${drive}:\" -Name "Source" -ItemType "directory"
 
 Write-Output "PROGRESS: Setting folder icon"
 Copy-Item "${dir}\matrix_code.ico" "${Env:userprofile}\Pictures\matrix_code.ico"
 . "./Set-FolderIcon.ps1"
-New-Item -Path "E:\Source" -Name "desktop.ini" -ItemType "file"
-Set-FolderIcon -Icon "${Env:userprofile}\Pictures\matrix_code.ico" -Path "E:\Source"
+New-Item -Path "${drive}:\Source" -Name "desktop.ini" -ItemType "file"
+Set-FolderIcon -Icon "${Env:userprofile}\Pictures\matrix_code.ico" -Path "${drive}:\Source"
 
 Write-Output "PROGRESS: Turning on WSL and VM Platform - needs restart"
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
