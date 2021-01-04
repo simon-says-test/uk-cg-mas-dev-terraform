@@ -2,6 +2,8 @@ $dir = Split-Path $MyInvocation.MyCommand.Path
 Write-Host "Script directory is $dir"
 Set-Location $dir
 
+Unregister-ScheduledTask -TaskName SetupVM -Confirm:$false
+
 Write-Output "PROGRESS: Downloading and installing kernel update"
 Invoke-WebRequest -UseBasicParsing -Uri https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -OutFile $Env:userprofile\Downloads\kernel.msi
 Start-Process $Env:userprofile\Downloads\kernel.msi -ArgumentList /quiet
@@ -20,11 +22,67 @@ Write-Output "PROGRESS: Installing other useful things"
 choco install vscode -y
 choco install docker-desktop -y
 choco install microsoft-windows-terminal -y
-choco install pgadmin4 -y
 
-Write-Output "PROGRESS: Install Azure CLI"
+Write-Output "PROGRESS: Allowing user to select to install optional things"
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
 
-Unregister-ScheduledTask -TaskName SetupVM -Confirm:$false
-Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi
+$form = New-Object System.Windows.Forms.Form
+$form.Text = 'Data Entry Form'
+$form.Size = New-Object System.Drawing.Size(300,200)
+$form.StartPosition = 'CenterScreen'
+
+$OKButton = New-Object System.Windows.Forms.Button
+$OKButton.Location = New-Object System.Drawing.Point(75,120)
+$OKButton.Size = New-Object System.Drawing.Size(75,23)
+$OKButton.Text = 'OK'
+$OKButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
+$form.AcceptButton = $OKButton
+$form.Controls.Add($OKButton)
+
+$CancelButton = New-Object System.Windows.Forms.Button
+$CancelButton.Location = New-Object System.Drawing.Point(150,120)
+$CancelButton.Size = New-Object System.Drawing.Size(75,23)
+$CancelButton.Text = 'Cancel'
+$CancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
+$form.CancelButton = $CancelButton
+$form.Controls.Add($CancelButton)
+
+$label = New-Object System.Windows.Forms.Label
+$label.Location = New-Object System.Drawing.Point(10,20)
+$label.Size = New-Object System.Drawing.Size(280,20)
+$label.Text = 'Use Ctrl and click to select what you want to install:'
+$form.Controls.Add($label)
+
+$listBox = New-Object System.Windows.Forms.Listbox
+$listBox.Location = New-Object System.Drawing.Point(10,40)
+$listBox.Size = New-Object System.Drawing.Size(260,20)
+
+$listBox.SelectionMode = 'MultiExtended'
+
+$hash = @{
+  "PG Admin 4" = "choco install pgadmin4 -y"
+  "Chrome"     = "choco install chrome -y"
+  "Firefox"    = "choco install firefox -y"
+  "Azure CLI"  = "Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi"
+ }
+
+$hash.Keys | ForEach-Object { [void] $listBox.Items.Add($_) }
+
+
+$listBox.Height = 70
+$form.Controls.Add($listBox)
+$form.Topmost = $true
+
+$result = $form.ShowDialog()
+
+if ($result -eq [System.Windows.Forms.DialogResult]::OK)
+{
+    $x = $listBox.SelectedItems
+    $x | ForEach-Object { 
+        Invoke-Expression "Write-Output 'PROGRESS: Installing {$_}'" 
+        Invoke-Expression $hash[$_] 
+    }
+}
 
 Write-Output "PROGRESS: Setup complete"
