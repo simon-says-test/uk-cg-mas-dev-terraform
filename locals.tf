@@ -1,12 +1,12 @@
 locals {
     vm_params = [ 
         { 
-          computer_name = "simon-dev"
+          computer_name = "simon"
           name = "vm-ukcg-dev-simon"  
           resource_group_name = "rg-ukcg-dev-simon"
         },
         { 
-          computer_name = "warren-dev"
+          computer_name = "warren"
           name = "vm-ukcg-dev-warren"  
           resource_group_name = "rg-ukcg-dev-warren"
         }
