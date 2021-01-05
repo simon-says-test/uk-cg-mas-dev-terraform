@@ -35,6 +35,11 @@ resource "azurerm_subnet" "primary" {
   service_endpoints    = ["Microsoft.Storage"]
 }
 
+resource "azurerm_subnet_nat_gateway_association" "primary" {
+  subnet_id      = azurerm_subnet.primary.id
+  nat_gateway_id = azurerm_nat_gateway.nat.id
+}
+
 resource "azurerm_subnet_network_security_group_association" "primary" {
   subnet_id                 = azurerm_subnet.primary.id
   network_security_group_id = azurerm_network_security_group.primary.id
