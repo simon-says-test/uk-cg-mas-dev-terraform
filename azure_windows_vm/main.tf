@@ -24,6 +24,7 @@ resource "azurerm_public_ip" "vm_ip" {
   resource_group_name = azurerm_resource_group.vm_rg.name
   location            = azurerm_resource_group.vm_rg.location
   allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_network_interface" "vm_nic" {
