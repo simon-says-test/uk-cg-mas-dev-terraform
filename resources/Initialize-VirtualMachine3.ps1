@@ -62,7 +62,7 @@ $listBox.SelectionMode = 'MultiExtended'
 
 $hash = @{
   "PG Admin 4" = "choco install pgadmin4 -y"
-  "Chrome"     = "choco install chrome -y"
+  "Chrome"     = "choco install googlechrome -y"
   "Firefox"    = "choco install firefox -y"
   "Azure CLI"  = "Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile .\AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'; Remove-Item .\AzureCLI.msi"
  }
