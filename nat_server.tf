@@ -8,6 +8,7 @@ resource "azurerm_public_ip" "nat" {
   resource_group_name = azurerm_resource_group.nat.name
   location            = azurerm_resource_group.nat.location
   allocation_method   = "Static"
+  sku                 = "Standard"
 }
 
 resource "azurerm_nat_gateway" "nat" {
