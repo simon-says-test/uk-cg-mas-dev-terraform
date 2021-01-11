@@ -1,10 +1,10 @@
-data "azuread_user" "simonthomas" {
-  user_principal_name = "simon.thomas@civica.co.uk"
-}
+# data "azuread_user" "simonthomas" {
+#   user_principal_name = "simon.thomas@civica.co.uk"
+# }
 
-data "azuread_user" "warrenjones" {
-  user_principal_name = "warren.jones@civica.co.uk"
-}
+# data "azuread_user" "warrenjones" {
+#   user_principal_name = "warren.jones@civica.co.uk"
+# }
 
 resource "azuread_group" "idiom" {
   name = "UK-CG-MAS-IDIOM"
