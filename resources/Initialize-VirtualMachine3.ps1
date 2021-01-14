@@ -41,26 +41,6 @@ choco install vscode -y
 choco install docker-desktop -y
 choco install microsoft-windows-terminal -y
 
-Write-Output "PROGRESS: Moving Docker storage to second drive"
-$dockerProcesses = Get-Process "*docker desktop*"
-if ($dockerProcesses.Count -gt 0)
-{
-  $dockerProcesses[0].Kill()
-  $dockerProcesses[0].WaitForExit()
-}
-mkdir "${drive}:\Docker"
-mkdir "${drive}:\Docker\docker-desktop"
-mkdir "${drive}:\Docker\docker-desktop-data"
-cd "${drive}:\Docker"
-wsl --export docker-desktop docker-desktop.tar
-wsl --export docker-desktop-data docker-desktop-data.tar
-wsl --unregister docker-desktop
-wsl --unregister docker-desktop-data
-wsl --import docker-desktop docker-desktop docker-desktop.tar
-rm docker-desktop.tar
-rm docker-desktop-data.tar
-Start-Process "C:\Program Files\Docker\Docker\Docker Desktop.exe"
-
 Write-Output "PROGRESS: Allowing user to select to install optional things"
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
