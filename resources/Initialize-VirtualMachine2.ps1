@@ -34,5 +34,7 @@ $usr.passwordExpired = 1
 $usr.setinfo()
 
 Write-Output "PROGRESS: About to restart to complete setup"
-Start-Sleep -Seconds 5
+Write-Host 'Press any key to continue...';
+$null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
+Start-Sleep -Seconds 3
 Restart-Computer -Force
