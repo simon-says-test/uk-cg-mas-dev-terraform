@@ -6,7 +6,7 @@ locals {
           resource_group_name = "rg-ukcg-dev-simon"
         },
         { 
-          computer_name = "warren"
+          computer_name = "vm-civica-ukcg-warren"
           name = "vm-ukcg-dev-warren"  
           resource_group_name = "rg-ukcg-dev-warren"
         }
