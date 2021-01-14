@@ -14,9 +14,19 @@ wsl --set-default-version 2
 Write-Output "PROGRESS: Downloading and installing Ubuntu 20.04 LTS"
 Invoke-WebRequest -Uri https://cloud-images.ubuntu.com/releases/focal/release/ubuntu-20.04-server-cloudimg-amd64-wsl.rootfs.tar.gz -OutFile $Env:userprofile\Downloads\ubuntu-20.04-focal-wsl.tar.gz -UseBasicParsing
 
+# Slightly dodgy way of getting drive letter as sometimes is E, sometimes F
+$drive = Get-PSDrive -PSProvider FileSystem | Select-Object -Last 1 | Select-Object -ExpandProperty "Name"
+
 Write-Output "PROGRESS: Importing into WSL"
-mkdir c:\UbuntuFocal
-wsl.exe --import UbuntuFocal C:\UbuntuFocal $Env:userprofile\Downloads\ubuntu-20.04-focal-wsl.tar.gz
+mkdir "${drive}:\UbuntuFocal"
+wsl.exe --import UbuntuFocal "${drive}:\UbuntuFocal" $Env:userprofile\Downloads\ubuntu-20.04-focal-wsl.tar.gz
+
+Write-Output "PROGRESS: Setting up WSL user"
+bash -c "adduser wsl"
+bash -c "usermod -aG sudo wsl"
+
+Write-Output "PROGRESS: Mapping WSL to Windows drive"
+New-PSDrive -Persist -Name "U" -PSProvider "FileSystem" -Root "\\wsl$\UbuntuFocal"
 
 Write-Output "PROGRESS: Installing other useful things"
 choco install vscode -y
