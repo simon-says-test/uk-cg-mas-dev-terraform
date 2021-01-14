@@ -25,6 +25,7 @@ resource "azurerm_public_ip" "vm_ip" {
   location            = azurerm_resource_group.vm_rg.location
   allocation_method   = "Static"
   sku                 = "Standard"
+  domain_name_label   = "vm-civica-ukcg-mas-${local.merged_vm_settings.computer_name}"
 }
 
 resource "azurerm_network_interface" "vm_nic" {
