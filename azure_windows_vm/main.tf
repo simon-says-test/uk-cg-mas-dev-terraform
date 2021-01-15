@@ -99,9 +99,15 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
   }
 }
 
-resource "azurerm_role_assignment" "vm_user_roles" {
+resource "azurerm_role_assignment" "vm_user_role" {
   scope                = azurerm_resource_group.vm_rg.id
   role_definition_name = "Virtual Machine Administrator Login"
+  principal_id         =  var.username
+}
+
+resource "azurerm_role_assignment" "vm_owner_role" {
+  scope                = azurerm_windows_virtual_machine.vm.id
+  role_definition_name = "Owner"
   principal_id         =  var.username
 }
 
