@@ -29,6 +29,7 @@ module "azure_windows_vm_1" {
   initialize_vm_file      = azurerm_storage_blob.initialize_vm.name
   mount_disks_url         = azurerm_storage_blob.mount_datadisks.url
   mount_disks_file        = azurerm_storage_blob.mount_datadisks.name
+  username                = local.vm_params[count.index]["username"]
 
   vm_settings = {
     name                    = local.vm_params[count.index]["name"]

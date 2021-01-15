@@ -27,14 +27,7 @@ $principal = New-ScheduledTaskPrincipal -GroupId "BUILTIN\Administrators" -RunLe
 $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal
 Register-ScheduledTask SetupVM -InputObject $task
 
-Write-Output "PROGRESS: Expiring password"
-$user = "WinNT:\\" + [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
-$usr=[ADSI] $user 
-$usr.passwordExpired = 1  
-$usr.setinfo()
-
 Write-Output "PROGRESS: About to restart to complete setup"
 Write-Host 'Press any key to continue...';
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
-Start-Sleep -Seconds 3
 Restart-Computer -Force

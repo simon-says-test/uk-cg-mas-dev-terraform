@@ -14,6 +14,10 @@ variable "mount_disks_file" {
   type    = string
 }
 
+variable "username" {
+  type    = string
+}
+
 resource "azurerm_resource_group" "vm_rg" {
   name     = local.merged_vm_settings.resource_group_name
   location = local.merged_vm_settings.location
@@ -70,7 +74,7 @@ resource "azurerm_managed_disk" "vm_data_disk" {
   resource_group_name  = azurerm_resource_group.vm_rg.name
   storage_account_type = "StandardSSD_LRS"
   create_option        = "Empty"
-  disk_size_gb         = "256"
+  disk_size_gb         = "512"
   os_type              = "Windows"
 }
 
@@ -93,6 +97,12 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
     enabled         = false
     time_in_minutes = "60"
   }
+}
+
+resource "azurerm_role_assignment" "vm_user_roles" {
+  scope                = azurerm_resource_group.vm_rg.id
+  role_definition_name = "Virtual Machine Administrator Login"
+  principal_id         = var.username
 }
 
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
