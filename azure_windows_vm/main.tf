@@ -99,10 +99,14 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
   }
 }
 
+data "azuread_user" "user" {
+  user_principal_name = var.username
+}
+
 resource "azurerm_role_assignment" "vm_user_roles" {
   scope                = azurerm_resource_group.vm_rg.id
   role_definition_name = "Virtual Machine Administrator Login"
-  principal_id         = var.username
+  principal_id         = data.azuread_user.user.object_id
 }
 
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
