@@ -28,7 +28,7 @@ $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principa
 Register-ScheduledTask SetupVM -InputObject $task
 
 Write-Output "PROGRESS: Expiring password"
-$user = "WinNT://" + [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+$user = "WinNT:\\" + [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 $usr=[ADSI] $user 
 $usr.passwordExpired = 1  
 $usr.setinfo()
