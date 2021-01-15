@@ -1,7 +1,7 @@
 locals {
     vm_params = [ 
         { 
-          computer_name = "simon-dev"
+          computer_name = "simon"
           username = "simon.thomas@civica.co.uk"
           name = "vm-ukcg-dev-simon"  
           resource_group_name = "rg-ukcg-dev-simon"
