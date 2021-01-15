@@ -74,7 +74,7 @@ resource "azurerm_managed_disk" "vm_data_disk" {
   resource_group_name  = azurerm_resource_group.vm_rg.name
   storage_account_type = "StandardSSD_LRS"
   create_option        = "Empty"
-  disk_size_gb         = "512"
+  disk_size_gb         = "256"
   os_type              = "Windows"
 }
 
