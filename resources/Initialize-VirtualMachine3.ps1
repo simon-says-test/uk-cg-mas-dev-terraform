@@ -34,7 +34,7 @@ Function WSL-SetDefaultUser ($distro, $user) {
 WSL-SetDefaultUser UbuntuFocal wsl
 
 Write-Output "PROGRESS: Mapping WSL to Windows drive"
-. New-PSDrive -Persist -Name "U" -PSProvider "FileSystem" -Root "\\wsl$\UbuntuFocal"
+New-PSDrive -Persist -Name "U" -PSProvider "FileSystem" -Root "\\wsl$\UbuntuFocal" -Scope global
 
 Write-Output "PROGRESS: Installing other useful things"
 choco install vscode -y
