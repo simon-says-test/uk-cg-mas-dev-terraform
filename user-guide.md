@@ -21,8 +21,9 @@ Once the VM and it's resources have been created by your principal, you will be 
 1. Use the Search box or otherwise navigate to the `Reset password` page.
 1. Reset the password **for the username supplied to you** to a secure one of your choosing.
 1. Use the Search box or otherwise navigate to the `Auto-shutdown` page.
+1. Schedule a shutdown for 7:00:00 pm UTC, or whatever is appropriate for your working hours.
 1. Select to `Send notification before auto-shutdown`.
-1. Enter your Email address and Save - this will ensure you have the chance to easily postpone or cancel the auto-shutdown that will otherwise occur at 7:00pm.
+1. Enter your Email address and Save - this will ensure you have the chance to easily postpone or cancel the auto-shutdown that will otherwise occur.
 1. Navigate to the `Overview` page - this is where you can start and stop the virtual machine as required.
 1. Navigate to the 'Connect' page to download the RDP file or obtain IP/DNS details. 
 

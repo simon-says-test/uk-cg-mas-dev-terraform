@@ -14,7 +14,7 @@ variable "mount_disks_file" {
   type    = string
 }
 
-variable "username" {
+variable "userId" {
   type    = string
 }
 
@@ -85,30 +85,33 @@ resource "azurerm_virtual_machine_data_disk_attachment" "vm_data_disk_attachment
   caching            = "ReadWrite"
 }
 
-resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
-  virtual_machine_id = azurerm_windows_virtual_machine.vm.id
-  location           = azurerm_resource_group.vm_rg.location
-  enabled            = true
+# Note that the shutdown doesn't work at present - if you get terraform to create this resource, it 
+# doesn't support an email address for notification. If you manually add it afterwards, Terraform recreates every time plan is run.
 
-  daily_recurrence_time = "1900"
-  timezone              = "GMT Standard Time"
+# resource "azurerm_dev_test_global_vm_shutdown_schedule" "vm_shutdown" {
+#   virtual_machine_id = azurerm_windows_virtual_machine.vm.id
+#   location           = azurerm_resource_group.vm_rg.location
+#   enabled            = true
 
-  notification_settings {
-    enabled         = false
-    time_in_minutes = "60"
-  }
-}
+#   daily_recurrence_time = "1900"
+#   timezone              = "GMT Standard Time"
+
+#   notification_settings {
+#     enabled         = false
+#     time_in_minutes = "60"
+#   }
+# }
 
 resource "azurerm_role_assignment" "vm_user_role" {
   scope                = azurerm_resource_group.vm_rg.id
   role_definition_name = "Virtual Machine Administrator Login"
-  principal_id         =  var.username
+  principal_id         =  var.userId
 }
 
 resource "azurerm_role_assignment" "vm_owner_role" {
   scope                = azurerm_windows_virtual_machine.vm.id
   role_definition_name = "Owner"
-  principal_id         =  var.username
+  principal_id         =  var.userId
 }
 
 # If this is altered, it will not currently update correctly - you will need to delete extension from all VMs in portal/CLI
