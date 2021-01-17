@@ -50,7 +50,15 @@ Once the scripts have run successfully, you should have the following:
 * The optional tools you selected during the installation process will also be available.
 
 ## What's next?
+
+### General
 You can start using the VM now and install any other things you need and even consider doing some actual work.
 * Remember to script updates if possible - you can use chocolatey to install additional tools for example.
 * Run `choco upgrade all -y` regularly to update all software installed via chocolatey to the latest versions.
 * If you think any tools should be part of the standard installation script then please let your principal know.
+
+### VS Code
+1. Start it up and install recommended extenions where prompted.
+1. Install Microsoft's Docker extension.
+1. Execute in terminal, substituting your name: `git config --global user.name "Simon Thomas"`
+1. Execute in terminal, substituting your email: `git config --global user.email "simon.thomas@civica.co.uk"`
