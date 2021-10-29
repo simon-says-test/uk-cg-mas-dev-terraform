@@ -38,7 +38,6 @@ New-PSDrive -Persist -Name "U" -PSProvider "FileSystem" -Root "\\wsl$\UbuntuFoca
 
 Write-Output "PROGRESS: Installing other useful things"
 choco install vscode -y
-choco install docker-desktop -y
 choco install microsoft-windows-terminal -y
 
 Write-Output "PROGRESS: Allowing user to select to install optional things"
